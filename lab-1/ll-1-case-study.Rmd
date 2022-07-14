@@ -1,6 +1,6 @@
 ---
 title: 'Learning Lab 1 Case Study'
-author: ""
+author: "Meiko Lin"
 date: "`r format(Sys.Date(),'%B %e, %Y')`"
 output:
   html_document:
@@ -99,12 +99,12 @@ Note its dimensions --- especially how many rows it has. Add a few
 dashes after the chunk with your observations.
 
 ```{r}
-
+glimpse(d)
 ```
 
 *Observations*:
 
--   
+-   There are 3793 rows
 
 \*What other variables might we include?\*\* This is a great question to
 be asking - surely, including just the four variables we have cannot be
@@ -128,8 +128,8 @@ set aside for testing. The proportion of data can be driven by many
 factors, including the size of the original pool of samples and the
 total number of predictors.
 
-Here, we split the data. We do so using our first {tidymodels}
-function - `initial_split()`.
+Here, we split the data. We do so using our first **{tidymodels}**
+function - **`initial_split()`**.
 
 It is common when beginning a modeling project to [separate the data
 set](https://bookdown.org/max/FES/data-splitting.html) into two
@@ -162,6 +162,7 @@ Run the following code to split the data:
 set.seed(20220712)
 train_test_split <- initial_split(d, prop = .80)
 data_train <- training(train_test_split)
+data_test <- testing(train_test_split)
 ```
 
 Go ahead and type `data_train` and `d` into the console (in steps) to
@@ -171,7 +172,7 @@ in the larger data. Do that in the chunk below:
 [Your Turn]{style="color: green;"} ⤵
 
 ```{r}
-
+glimpse(data_train)
 ```
 
 ## Step 2: Engineer features and write down the recipe
@@ -246,8 +247,9 @@ recipe (`my_rec`).
 ```{r}
 my_wf <-
     workflow() %>%
-    add_model(my_mod) %>% 
-    add_recipe(my_rec)
+    add_recipe(my_rec) %>%
+    add_model(my_mod)
+    
 ```
 
 Finally, we'll fit our model.
@@ -257,7 +259,8 @@ fitted_model <- fit(my_wf, data = data_train)
 ```
 
 Finally, we'll use the `last_fit` function, which is the key here: note
-that it uses the `train_test_split` data---not just the training data.
+that *it uses the entire data set* `train_test_split` data---not just
+the training data.
 
 Here, then, we fit the data *using the training data set* and evaluate
 its accuracy using the *testing data set* (which is not used to train
@@ -273,6 +276,7 @@ Type `final_fit` below; this is the final, fitted model---one that can
 be interpreted further in the next step!
 
 ```{r}
+final_fit
 ```
 
 You may see a message/warning above or when you examine `final_fit`; you
@@ -292,8 +296,8 @@ final_fit %>%
 
 This is our first set of real output! Note two things:
 
-1.  `.pres_class`: This is the *predicted* code\
-2.  `code`: This is the known *code*
+1.  `.pres_class`: This is the ***predicted*** code\
+2.  `code`: This is the ***known*** *code*
 
 When these are **the same**, the model predicted the code *correctly*;
 when they aren't the same, the model was incorrect.
@@ -304,7 +308,7 @@ following chunk of code:
 
 ```{r}
 final_fit %>% 
-    collect_predictions() %>% # see test set predictions
+    collect_predictions() %>% # see test set predictions b/c we can't read final_fit directly
     select(.pred_class, code) %>% # just to make the output easier to view 
     mutate(correct = .pred_class == code) # create a new variable, correct, telling us when the model was and was not correct
 ```
@@ -317,14 +321,14 @@ final_fit %>%
     collect_predictions() %>% # see test set predictions
     select(.pred_class, code) %>% # just to make the output easier to view 
     mutate(correct = .pred_class == code) %>% # create a new variable, correct, telling us when the model was and was not correct
-    tabyl(correct)
+    tabyl(correct) #tabulate the frequency of correct predictions
 ```
 
 Let's interpret the above. If the value of `correct` is `TRUE` when the
 predicted and known code are the same, what does the `percent` column
 tell us? Add one or more notes to the dashes below:
 
--   
+-   The ML trained model predicted the correct code with 87% accuracy.
 
 A short-cut to the above is below:
 
@@ -335,9 +339,10 @@ final_fit %>%
 
 **Observations**
 
--   
+-   The ML trained model predicted the correct code with 87% accuracy.
 
--   
+-   An ROC AUC value is 0.94 which means this is close to a perfect
+    prediction model.
 
 That's it for now; the core parts of machine learning are used in the
 above steps you took; what we'll do after this leaning lab only adds

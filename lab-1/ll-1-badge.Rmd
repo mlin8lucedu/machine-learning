@@ -25,25 +25,25 @@ Part A:
 
 1.  How good was the machine learning model we developed in the guiding practice? Would you be comfortable using it to code more conversations? What if you read about someone using such a model as a reviewer of research? Please add your thoughts and reflections following the bullet point below.
 
--   
+-   The ML model we developed in the guiding practice yielded accurate prediction (\~87%). However, I would not be comfortable to use it to code more conversations because the model is making predictions based on the word counts, favorite counts, and retweet counts. I would be skeptical if someone uses the model as a reviewer of research because it doesn't take the content into consideration.
 
 2.  How might the model be improved? Share any ideas you have at this time below:
 
--   
+-   I would want to train the model to code the actual content of the passage via supervised learning.
 
 Part B: Use the institutional library (e.g. [NCSU Library](https://www.lib.ncsu.edu/#articles)), [Google Scholar](https://scholar.google.com/) or search engine to locate a research article, presentation, or resource that applies machine learning to an educational context aligned with your research interests. More specifically, **locate a machine learning study that involve making predictions**.
 
 1.  Provide an APA citation for your selected study.
 
-    -   
+    -   Carlson, K., Kopalle, P. K., Riddell, A., Rockmore, D., & Vana, P. (2022). Complementing human effort in online reviews: A deep learning approach to automatic content generation and review synthesis. International Journal of Research in Marketing.
 
 2.  What research questions were the authors of this study trying to address and why did they consider these questions important?
 
-    -   
+    -   ''Is an artificial intelligence algorithm capable of writing reviews for wine and beer that are largely indistinguishable from those penned by a human critic?" The authors consider the question important because they hope this model will be able to give human reviewers a template to work from.
 
 3.  What were the results of these analyses?
 
-    -   
+    -   The authors demonstrated that machines are capable of writing expert reviews directly from a fairly small amount of product data.
 
 ### Part II: Data Product
 
@@ -70,19 +70,19 @@ final_fit$.predictions[[1]] %>%
 
 Please interpret the above confusion matrix using [these guidelines](https://towardsdatascience.com/understanding-confusion-matrix-a9ad42dcfd62) in terms of the true positive, true negative, false positive, and false negative rates. After each of the following (i.e., "True positive"), add both the *number* and percentage of observations. For instance, if there were 100 true positives out of a total of 400 data points, please write: 100 (25%).
 
-**True positive**:
+**True positive**: 260 (34%)
 
-**True negative**:
+**True negative**: 402 (53%)
 
-**False positive**:
+**False positive**: 60 (8%)
 
-**False negative**:
+**False negative**: 37 (5%)
 
 You can read more about interpreting these [here](https://bradleyboehmke.github.io/HOML/process.html#classification-models) in terms of the specificity, sensitivity, precision, and recall, four statistics based on the information in the confusion matrix.
 
 Return to your answer for Part 1A. Now, having examined the true and false positive and negative rates, how good do you think machine learning model we developed in the case study was? Write more specifically using the evidence you have from creating and interpreting the confusion matrix (above) after the following bullet point.
 
--   
+-   Based on the true positive and true negative data, the ML model can predict with 87% accuracy.
 
 ### Knit & Submit
 
